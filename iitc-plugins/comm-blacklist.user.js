@@ -85,8 +85,12 @@ window.plugin.commBlacklist.config = function() {
 	var names = $('<input placeholder="Example: wanx,Fire,LuoboTiX" value="' + data.list + '" style="width:280px" />');
 	var replace = $('<input placeholder="Example: *** censored *** " value="' + data.text + '" style="width:280px" />');
 	var check = $('<input type="checkbox" value="auto" ' + (data.auto ? "checked" : "")  + '>Auto chat message</input>');
+	var importa = $('<a href="javascript:window.plugin.commBlacklist.importInfo();">Import</a>');
+	var exporta = $('<a href="javascript:window.plugin.commBlacklist.exportInfo();">Export</a>');
 	div.append("BlackList Ids:\n").append(names).append("\n\nReplace Text:\n").append(replace)
 		.append("\n\n").append(check);
+	div.append("<br/>").append(importa).append("&nbsp;&nbsp;&nbsp;").
+		append(exporta);
 	
 	var s = div.html();
 	// console.log(s);
@@ -103,6 +107,26 @@ window.plugin.commBlacklist.config = function() {
                 // console.log(check.is(":checked"));
                 $check.prev().prop('disabled', $check.is(":checked"));
         });
+};
+window.plugin.commBlacklist.importInfo = function (){
+	var div = $('<div>');
+	var inp = $('<textarea placeholder="Enter what you exported here" style="width:280px;height:100px;" >'+ window.localStorage['comm-blacklist'] + '</textarea>');
+	div.append(inp);
+	// console.log(s);
+	var s = div.html();
+	alert(s, true, function() {
+		var data = $(".ui-dialog-content textarea:eq(0)").val();
+		window.localStorage['comm-blacklist'] = data;
+	});
+};
+window.plugin.commBlacklist.exportInfo = function (){
+	var div = $('<div>');
+	var inp = $('<textarea placeholder="Enter what you exported here" style="width:280px;height:100px;" >'+ window.localStorage['comm-blacklist'] + '</textarea>');
+	div.append(inp);
+	// console.log(s);
+	var s = div.html();
+	alert(s, true, function() {
+	});
 };
 
 var setup = function() {
@@ -242,8 +266,14 @@ window.plugin.commBlacklist.CHATS_STR = "幼儿唐诗三百首（文本精选）
 "去年今日此门中，人面桃花相映红。 \n" +
 "人面不知何处去，桃花依旧笑春风。";
 
-
 window.plugin.commBlacklist.CHATS = window.plugin.commBlacklist.CHATS_STR.split("\n");
+	
+window.plugin.commBlacklist.setChatList=function(str){
+	window.plugin.commBlacklist.CHATS_STR = str;	
+	window.plugin.commBlacklist.CHATS = window.plugin.commBlacklist.CHATS_STR.split("\n");
+	return true;
+}
+
 
 // PLUGIN END //////////////////////////////////////////////////////////
 
