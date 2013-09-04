@@ -23,12 +23,17 @@ if(typeof window.plugin !== 'function') window.plugin = function() {};
 window.plugin.commDisabler = function() {};
 
 window.plugin.commDisabler.setupCallback = function() {
-	addHook('factionChatDataAvailable', window.plugin.commDisabler.callback);
-	addHook('publicChatDataAvailable', window.plugin.commDisabler.callback);
+	addHook('factionChatDataAvailable', window.plugin.commDisabler.disableChat);
+	addHook('publicChatDataAvailable', window.plugin.commDisabler.disableChat);
 };
 
-window.plugin.commDisabler.callback = function() {
-	$("#chatinput input").disable().hide();
+window.plugin.commDisabler.disableChat = function() {
+	$("#chatinput input").attr("disabled", true);
+};
+
+var setup = function() {
+        window.plugin.commDisabler.disableChat();
+        window.plugin.commDisabler.setupCallback();
 };
 
 // PLUGIN END //////////////////////////////////////////////////////////
